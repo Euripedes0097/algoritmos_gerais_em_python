@@ -7,22 +7,34 @@ conjunto dos naturais conferir se este número em questão é um número primo."
 
 import math
 
-primos = [2]
+def intervalo_de_números_primos(início = 2, fim = 100):
+    """(int, int) -> list(int)"""
+    primos = []
+    if type(início) == int and type(fim) == int and início <= fim and início > 1:
+        if início == 2:
+            primos = [2]
+            intervalo = list(range(3, fim + 1, 2)) #Ímpares no [3, fim]
+        elif início % 2 == 0:
+            intervalo = list(range(início + 1, fim + 1, 2)) #Ímpares no [início + 1, fim]
+        else:
+            intervalo = list(range(início, fim + 1, 2)) #Ímpares no [início, fim]
 
-intervalo = list(range(3,100,2)) #ímpares no intervalo [3, 100)
+    else:
+        raise ValueError("O intervalo deve ser um subconjunto do conjunto dos naturais e possuir extremidade inferior maior que 1 e menor ou igual a extremidade superior.")
+        
+    for i in intervalo:
+        maior_divisor_do_quadrado = int(math.sqrt(i))
+        ser_primo = True
+        
+        if maior_divisor_do_quadrado % 2 == 0:
+            maior_divisor_do_quadrado = maior_divisor_do_quadrado - 1 #Caso a raiz quadrada inteira seja par, ela será alterada para o ímpar anterior. Pois todos os possíveis divisores devem ser ímpares.
 
-for i in intervalo:
-    maior_divisor_do_quadrado = int(math.sqrt(i))
-    ser_primo = True
-    
-    for num in range(maior_divisor_do_quadrado, 1, -1):
-        if i % num == 0:
-            ser_primo = False
-            break
+        for num in range(maior_divisor_do_quadrado, 2, -2): #Intervalo de possíveis divisores - ]2, maior_divisor_do_quadrado].
+            if i % num == 0:
+                ser_primo = False
+                break
 
-    if ser_primo and i > 1:
-        primos.append(i)
+        if ser_primo:
+            primos.append(i)
 
-#exibir a lista de números primos
-for p in primos:
-    print(p, end=', ')
+    return primos
