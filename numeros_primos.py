@@ -8,7 +8,7 @@ conjunto dos naturais conferir se este número em questão é um número primo."
 import math
 
 def intervalo_de_números_primos(início = 2, fim = 100):
-    """(int, int) -> list(int)"""
+    """(inteiro, inteiro) -> lista de inteiros"""
     primos = []
     if type(início) == int and type(fim) == int and início <= fim and início > 1:
         if início == 2:
